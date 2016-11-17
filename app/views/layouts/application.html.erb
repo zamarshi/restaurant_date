@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Restaurant Date</title>
+    <%= csrf_meta_tags %>
+
+    <%# this refers to the application.css manifest file so in development it
+        will include all teh files individual css files. In production it will
+        only include the application.css compiled file. %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#restaurant-nav-bar">
+          <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+        </button>
+        <span
+        class="glyphicon glyphicon-question-sign navbar-brand"
+        aria-hidden="true"></span>
+      </div>
+
+        <div class="navbar-collapse collapse" id="restaurant-nav-bar">
+          <ul class="nav navbar-nav">
+
+            <li><%= link_to 'Home', root_path %></li>
+
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <% if user_signed_in? %>
+              <li>
+                <p class="navbar-text">Hello <%= current_user.first_name %></p>
+              </li>
+              <li>
+                <%= button_to 'Sign out',
+                  sessions_path,
+                  method: :delete,
+                  class: 'btn btn-default navbar-btn'
+                  %>
+                </li>
+            <% else %>
+              <li><%= link_to 'Sign up', new_user_path %></li>
+              <li><%= link_to 'Sign In', new_session_path %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <% if notice || alert %>
+        <%# the ternary is used to set the alert type based on whether we received
+        notification or an alert %>
+        <div
+          class="alert alert-<%= notice ? 'success' : 'danger'%> alert-dismissable"
+          role="alert">
+          <%= notice || alert %>
+
+          <%# add x button to close notification element %>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </div>
+
+  </body>
+</html>
