@@ -24,8 +24,14 @@ class User < ApplicationRecord
   has_many :followers, through: :passive_relationships, source: :follower
   has_many :following, through: :active_relationships, source: :followed
 
-  has_many :viewed_users, class_name: "View"
+  has_many :active_views, class_name: "View", foreign_key: "viewer_id"
+  has_many :passive_views, class_name: "View", foreign_key: "viewed_user_id"
+  has_many :viewers, through: :passive_views, source: :viewer
+  has_many :viewed_users, through: :active_views, source: :viewed_user
 
+  belongs_to :city
+  belongs_to :cusine
+  belongs_to :restaurant
 
   def full_name
     "#{first_name} #{last_name}".strip.squeeze(' ').titleize
@@ -45,9 +51,12 @@ class User < ApplicationRecord
     following.include?(other_user)
   end
 
+  def view(other_user)
+    active_views.create(viewed_user_id: other_user.id)
+  end
 
-  def seen?(other_user)
-    seen.include?(other_user)
+  def viewed?(other_user)
+    viewed_users.include?(other_user)
   end
 
   private
@@ -55,9 +64,5 @@ class User < ApplicationRecord
   def downcase_email
     self.email.downcase! if email.present?
   end
-
-
-
-
 
 end
