@@ -30,7 +30,7 @@ class User < ApplicationRecord
   has_many :viewed_users, through: :active_views, source: :viewed_user
 
   belongs_to :city
-  belongs_to :cusine
+  belongs_to :cuisine
   belongs_to :restaurant
 
   def full_name
@@ -50,6 +50,15 @@ class User < ApplicationRecord
   def following?(other_user)
     following.include?(other_user)
   end
+
+  def match? (other_user)
+    following.include?(other_user) && other_user.following.include?(self)
+  end
+  #
+  def matches
+    Relationship.where(follower_id: self.active_relationships.map(&:followed_id)).where(followed_id: self.id).map(&:follower_id)
+  end
+  #
 
   def view(other_user)
     active_views.create(viewed_user_id: other_user.id)

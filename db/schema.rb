@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161117234128) do
+ActiveRecord::Schema.define(version: 20161118040326) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20161117234128) do
   end
 
   create_table "cuisines", force: :cascade do |t|
-    t.string   "title"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -50,7 +50,13 @@ ActiveRecord::Schema.define(version: 20161117234128) do
     t.string   "password_digest"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "city_id"
+    t.integer  "cuisine_id"
+    t.integer  "restaurant_id"
+    t.index ["city_id"], name: "index_users_on_city_id", using: :btree
+    t.index ["cuisine_id"], name: "index_users_on_cuisine_id", using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["restaurant_id"], name: "index_users_on_restaurant_id", using: :btree
   end
 
   create_table "views", force: :cascade do |t|
@@ -60,4 +66,7 @@ ActiveRecord::Schema.define(version: 20161117234128) do
     t.integer  "viewed_user_id"
   end
 
+  add_foreign_key "users", "cities"
+  add_foreign_key "users", "cuisines"
+  add_foreign_key "users", "restaurants"
 end
