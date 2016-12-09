@@ -5,3 +5,18 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+cuis = Cuisine.create({name: 'Japanese'})
+city = City.create({name: 'Gastown'})
+
+20.times do
+ User.create({first_name: Faker::Name.first_name,
+              last_name: Faker::Name.last_name,
+              email: Faker::Internet.email,
+              password: Faker::Internet.password,
+              city: city,
+              cuisine: cuis })
+end
+
+
+puts Cowsay.say('Generated 20 Users with cuisines and cities broo', 'random')
