@@ -56,7 +56,7 @@ class User < ApplicationRecord
   end
   #
   def matches
-    Relationship.where(follower_id: self.active_relationships.map(&:followed_id)).where(followed_id: self.id).map(&:follower_id)
+    User.where(id:(Relationship.where(follower_id: self.active_relationships.map(&:followed_id)).where(followed_id: self.id).map(&:follower_id)))
   end
   #
 

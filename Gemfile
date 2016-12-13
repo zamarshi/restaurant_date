@@ -33,6 +33,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'font-awesome-rails'
 gem 'chosen-rails'
 gem 'cowsay'
+gem 'rack-cors'
+gem 'knock'
 
 gem 'faker'
 
