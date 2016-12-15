@@ -9,7 +9,8 @@ class UsersController < ApplicationController
   def index
     city = current_user.city
     cuisine = current_user.cuisine
-    @users = User.where.not(id:current_user.id).where.not(id: current_user.viewed_users.map(&:id)).where(cuisine: cuisine, city: city)
+    @users = User.where.not(id:current_user.id).where(cuisine: cuisine, city: city).order(:id)
+    # .where.not(id: current_user.viewed_users.map(&:id)) (Add this when you implement viewing)
     respond_to do |format|
       format.html { render }
       format.text { render }
@@ -35,7 +36,7 @@ class UsersController < ApplicationController
   end
 
   def match
-    @matches = current_user.matches
+    @matches = current_user.matches.order(:id)
     respond_to do |format|
       format.html { render }
       format.json { render json: @matches.to_json }

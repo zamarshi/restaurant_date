@@ -9,14 +9,42 @@
 cuis = Cuisine.create({name: 'Japanese'})
 city = City.create({name: 'Gastown'})
 
-20.times do
- User.create({first_name: Faker::Name.first_name,
-              last_name: Faker::Name.last_name,
-              email: Faker::Internet.email,
-              password: 'password',
+
+ User.create({first_name: 'Jennifer',
+              last_name: 'Lawrence',
+              email: 'Jenn@gmail.com',
+              password: 'zain',
               city: city,
               cuisine: cuis })
-end
+
+ User.create({first_name: 'Emma',
+              last_name: 'Watson',
+              email: 'Emma@gmail.com',
+              password: 'zain',
+              city: city,
+              cuisine: cuis })
+
+ User.create({first_name: 'Danaerys',
+              last_name: 'T',
+              email: 'dany@gmail.com',
+              password: 'zain',
+              city: city,
+              cuisine: cuis })
+
+ User.create({first_name: 'Justin',
+              last_name: 'Biebs',
+              email: 'jbiebs@gmail.com',
+              password: 'zain',
+              city: city,
+              cuisine: cuis })
+
+ User.create({first_name: 'Blake',
+              last_name: 'Lively',
+              email: 'blake@gmail.com',
+              password: 'zain',
+              city: city,
+              cuisine: cuis })
+
 
 
 puts Cowsay.say('Generated 20 Users with cuisines and cities broo', 'random')
